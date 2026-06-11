@@ -1,4 +1,4 @@
-import { createSessionFromUrl } from "@/lib/oauth";
+import { createSessionFromUrl, isOAuthCallbackUrl } from "@/lib/oauth";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import { colors, fonts } from "@/constants/theme";
 import type { Session, User } from "@supabase/supabase-js";
@@ -39,6 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [configError, setConfigError] = useState<string | null>(null);
 
   const handleDeepLink = useCallback(async (url: string) => {
+    if (!isOAuthCallbackUrl(url)) return;
     try {
       const newSession = await createSessionFromUrl(url);
       if (newSession) setSession(newSession);

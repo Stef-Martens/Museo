@@ -1,4 +1,5 @@
-import { createSessionFromUrl } from "@/lib/oauth";
+import { authLog } from "@/lib/auth-debug";
+import { createSessionFromUrl, isOAuthCallbackUrl } from "@/lib/oauth";
 import { colors } from "@/constants/theme";
 import { useRouter } from "expo-router";
 import * as Linking from "expo-linking";
@@ -12,9 +13,11 @@ export default function AuthCallbackScreen() {
   useEffect(() => {
     const finish = async () => {
       try {
+        authLog("Auth callback screen opened");
         const url = await Linking.getInitialURL();
-        if (!url) {
-          setError("No callback URL received");
+        if (!url || !isOAuthCallbackUrl(url)) {
+          authLog("Callback: waiting for OAuth deep link…");
+          setError("No OAuth callback received. Try signing in again.");
           return;
         }
         const session = await createSessionFromUrl(url);
@@ -24,7 +27,9 @@ export default function AuthCallbackScreen() {
           setError("Could not complete sign in");
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Sign in failed");
+        const msg = err instanceof Error ? err.message : "Sign in failed";
+        authLog(`Callback error: ${msg}`);
+        setError(msg);
       }
     };
 
