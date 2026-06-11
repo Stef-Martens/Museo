@@ -31,7 +31,7 @@ export const ALL_BADGES: Omit<Badge, "earnedAt">[] = [
   {
     id: "museum-master",
     name: "Museum Master",
-    description: "Collected all available artworks",
+    description: "Collected 10 unique artworks",
     icon: "👑",
   },
 ];
@@ -81,7 +81,7 @@ export function evaluateBadges(
 
   if (artworks.length >= 1) tryEarn("first-scan");
   if (artworks.length >= 5) tryEarn("art-collector");
-  if (artworks.length >= 8) tryEarn("museum-master");
+  if (artworks.length >= 10) tryEarn("museum-master");
 
   const periods = new Set(artworks.map((a) => a.period));
   if (periods.has("renaissance")) tryEarn("renaissance-explorer");

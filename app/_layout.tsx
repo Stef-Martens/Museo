@@ -27,7 +27,6 @@ export default function RootLayout() {
             name="artwork/[id]"
             options={{ title: "Artwork", headerBackTitle: "Back" }}
           />
-          <Stack.Screen name="demo" options={{ title: "Demo works" }} />
         </Stack>
       </AuthGate>
     </AuthProvider>

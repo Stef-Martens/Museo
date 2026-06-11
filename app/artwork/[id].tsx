@@ -9,6 +9,7 @@ import {
   Text,
   View,
 } from "react-native";
+import ArtworkChat from "@/components/ArtworkChat";
 import { getArtworkById } from "@/lib/artworks";
 import { periodLabel } from "@/lib/gamification";
 import {
@@ -96,6 +97,8 @@ export default function ArtworkDetailScreen() {
 
         <Text style={styles.sectionLabel}>WHY IT MATTERS</Text>
         <Text style={styles.description}>{artwork.whyItMatters}</Text>
+
+        <ArtworkChat artwork={artwork} />
 
         {!saved ? (
           <Pressable style={styles.primaryBtn} onPress={handleSave}>

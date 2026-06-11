@@ -43,6 +43,11 @@ export interface Badge {
   earnedAt?: string;
 }
 
+export interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
 export interface UserCollection {
   userId: string;
   artworks: Artwork[];

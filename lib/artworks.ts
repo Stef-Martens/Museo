@@ -47,6 +47,32 @@ export async function fetchArtworks(): Promise<Artwork[]> {
   return (data as ArtworkRow[]).map(mapArtworkRow);
 }
 
+export function artworkToRow(artwork: Artwork): ArtworkRow {
+  return {
+    id: artwork.id,
+    title: artwork.title,
+    artist: artwork.artist,
+    year: artwork.year,
+    description: artwork.description,
+    image_url: artwork.imageUrl,
+    museum: artwork.museum ?? null,
+    period: artwork.period,
+    why_it_matters: artwork.whyItMatters,
+    latitude: artwork.location.latitude,
+    longitude: artwork.location.longitude,
+    city: artwork.location.city,
+    country: artwork.location.country,
+  };
+}
+
+export async function upsertArtwork(artwork: Artwork): Promise<void> {
+  const { error } = await supabase
+    .from("artworks")
+    .upsert(artworkToRow(artwork));
+
+  if (error) throw error;
+}
+
 export async function getArtworkById(id: string): Promise<Artwork | null> {
   const { data, error } = await supabase
     .from("artworks")

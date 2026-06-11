@@ -1,5 +1,5 @@
 import { getUserId } from "@/lib/auth";
-import { mapArtworkRow, type ArtworkRow } from "@/lib/artworks";
+import { mapArtworkRow, upsertArtwork, type ArtworkRow } from "@/lib/artworks";
 import {
   ALL_BADGES,
   XP_PER_ARTWORK,
@@ -99,6 +99,8 @@ export async function addToCollection(artwork: Artwork): Promise<UserCollection>
   if (before.artworks.some((a) => a.id === artwork.id)) {
     return before;
   }
+
+  await upsertArtwork(artwork);
 
   const { error: insertError } = await supabase.from("user_artworks").insert({
     user_id: userId,

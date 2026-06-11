@@ -29,7 +29,28 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_...
 
 Restart Expo after changing `.env`.
 
-### 3. OAuth providers
+### 3. Artwork recognition (Edge Function)
+
+The OpenAI key stays **private** on Supabase — never put it in `.env` or use `EXPO_PUBLIC_`.
+
+1. Get an API key at [platform.openai.com](https://platform.openai.com/api-keys)
+2. Install the [Supabase CLI](https://supabase.com/docs/guides/cli) and link your project:
+
+```bash
+supabase login
+supabase link --project-ref YOUR_PROJECT_REF
+```
+
+3. Set the secret and deploy:
+
+```bash
+supabase secrets set OPENAI_API_KEY=sk-...
+supabase functions deploy recognize-artwork
+```
+
+Scanning calls `recognize-artwork` (GPT-4o mini vision) to identify any artwork in view. Discovered works are saved to your collection automatically.
+
+### 4. OAuth providers
 
 In **Authentication → Providers**, enable:
 
@@ -37,7 +58,7 @@ In **Authentication → Providers**, enable:
 - **Apple** — configure in Apple Developer + Supabase
 - **GitHub** (optional) — add OAuth app credentials
 
-### 4. Redirect URLs
+### 5. Redirect URLs
 
 In **Authentication → URL Configuration → Redirect URLs**, add:
 
@@ -74,5 +95,5 @@ npx expo start
 
 ## Notes
 
-- Recognition is still **mocked** in `lib/recognition.ts`
+- Artwork recognition uses open AI vision (any artwork, not a fixed catalog)
 - Apple Sign In requires extra setup in Apple Developer for production builds
