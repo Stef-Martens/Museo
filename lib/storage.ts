@@ -1,10 +1,28 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getArtworkById } from "@/lib/artworks";
 import type { Artwork, Badge, UserCollection } from "@/types";
 import {
   XP_PER_ARTWORK,
   calculateLevel,
   evaluateBadges,
 } from "@/lib/gamification";
+
+function hydrateArtwork(stored: Artwork): Artwork {
+  const canonical = getArtworkById(stored.id);
+  if (!canonical) return stored;
+  return {
+    ...canonical,
+    ...stored,
+    location: stored.location ?? canonical.location,
+  };
+}
+
+function normalizeCollection(collection: UserCollection): UserCollection {
+  return {
+    ...collection,
+    artworks: collection.artworks.map(hydrateArtwork),
+  };
+}
 
 const STORAGE_KEY = "museo-collection";
 
@@ -21,7 +39,13 @@ export async function getCollection(): Promise<UserCollection> {
   try {
     const raw = await AsyncStorage.getItem(STORAGE_KEY);
     if (!raw) return DEFAULT_COLLECTION;
-    return { ...DEFAULT_COLLECTION, ...JSON.parse(raw) };
+    const parsed = { ...DEFAULT_COLLECTION, ...JSON.parse(raw) };
+    const collection = normalizeCollection(parsed);
+    const needsMigration = parsed.artworks.some(
+      (a: Artwork) => !a.location
+    );
+    if (needsMigration) await saveCollection(collection);
+    return collection;
   } catch {
     return DEFAULT_COLLECTION;
   }
@@ -42,7 +66,8 @@ export async function addToCollection(artwork: Artwork): Promise<UserCollection>
 
   if (alreadyOwned) return collection;
 
-  const newArtworks = [...collection.artworks, artwork];
+  const canonical = getArtworkById(artwork.id) ?? artwork;
+  const newArtworks = [...collection.artworks, canonical];
   const newXp = collection.xp + XP_PER_ARTWORK;
   const newBadges = evaluateBadges(newArtworks, collection.badges);
 

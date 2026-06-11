@@ -11,6 +11,7 @@ export const ARTWORKS: Artwork[] = [
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg",
     museum: "Louvre Museum, Paris",
+    location: { latitude: 48.8606, longitude: 2.3376, city: "Paris", country: "France" },
     period: "renaissance",
     whyItMatters:
       "The most visited painting in the world. Leonardo's mastery of light, anatomy, and psychology revolutionized portraiture and remains unmatched five centuries later.",
@@ -25,6 +26,7 @@ export const ARTWORKS: Artwork[] = [
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
     museum: "Museum of Modern Art, New York",
+    location: { latitude: 40.7614, longitude: -73.9776, city: "New York", country: "USA" },
     period: "modern",
     whyItMatters:
       "Van Gogh transformed personal turmoil into universal beauty. Its expressive brushwork and emotional intensity made it the defining image of modern art.",
@@ -39,6 +41,7 @@ export const ARTWORKS: Artwork[] = [
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/0/0f/1665_Girl_with_a_Pearl_Earring.jpg",
     museum: "Mauritshuis, The Hague",
+    location: { latitude: 52.0804, longitude: 4.3142, city: "The Hague", country: "Netherlands" },
     period: "baroque",
     whyItMatters:
       "Often called the 'Mona Lisa of the North.' Vermeer's intimate portrayal and masterful use of light created one of history's most captivating gazes.",
@@ -52,7 +55,8 @@ export const ARTWORKS: Artwork[] = [
       "A towering wave threatens boats off the coast of Kanagawa, with Mount Fuji visible in the background beneath the foam.",
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/a/a5/Tsunami_by_hokusai_19th_century.jpg",
-    museum: "Various collections worldwide",
+    museum: "British Museum, London",
+    location: { latitude: 51.5194, longitude: -0.127, city: "London", country: "UK" },
     period: "contemporary",
     whyItMatters:
       "The most recognizable work of Japanese art. Hokusai's dynamic composition and Prussian blue pigment influenced Impressionists and pop culture alike.",
@@ -67,6 +71,7 @@ export const ARTWORKS: Artwork[] = [
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/en/d/dd/The_Persistence_of_Memory.jpg",
     museum: "Museum of Modern Art, New York",
+    location: { latitude: 40.7614, longitude: -73.9776, city: "New York", country: "USA" },
     period: "modern",
     whyItMatters:
       "Dalí's surrealist masterpiece made the subconscious visible. Its melting clocks became the universal symbol of dream logic and artistic rebellion.",
@@ -81,6 +86,7 @@ export const ARTWORKS: Artwork[] = [
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/0/0b/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg",
     museum: "Uffizi Gallery, Florence",
+    location: { latitude: 43.7678, longitude: 11.2553, city: "Florence", country: "Italy" },
     period: "renaissance",
     whyItMatters:
       "Botticelli revived classical mythology for Renaissance Florence. Its graceful lines and mythological subject defined the ideal of beauty for an era.",
@@ -95,6 +101,7 @@ export const ARTWORKS: Artwork[] = [
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/a/aa/Claude_Monet_-_Water_Lilies_-_1906%2C_Ryerson.jpg",
     museum: "Art Institute of Chicago",
+    location: { latitude: 41.8796, longitude: -87.6237, city: "Chicago", country: "USA" },
     period: "impressionism",
     whyItMatters:
       "Monet pushed Impressionism to its limits, dissolving form into pure color and light. These works paved the way for abstract art.",
@@ -109,6 +116,7 @@ export const ARTWORKS: Artwork[] = [
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/c/c5/Edvard_Munch%2C_1893%2C_The_Scream%2C_National_Gallery_Oslo.jpg",
     museum: "National Museum, Oslo",
+    location: { latitude: 59.9169, longitude: 10.737, city: "Oslo", country: "Norway" },
     period: "modern",
     whyItMatters:
       "Munch captured modern anxiety before the world had words for it. The Scream became the face of human dread in the 20th century.",

@@ -62,6 +62,9 @@ export default function ArtworkDetailScreen() {
         {artwork.museum && (
           <Text style={styles.museum}>{artwork.museum}</Text>
         )}
+        <Text style={styles.museum}>
+          {artwork.location.city}, {artwork.location.country}
+        </Text>
         {scannedAt && (
           <Text style={styles.date}>
             Discovered {new Date(scannedAt).toLocaleDateString()}

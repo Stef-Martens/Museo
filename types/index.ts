@@ -5,6 +5,13 @@ export type ArtPeriod =
   | "modern"
   | "contemporary";
 
+export interface ArtworkLocation {
+  latitude: number;
+  longitude: number;
+  city: string;
+  country: string;
+}
+
 export interface Artwork {
   id: string;
   title: string;
@@ -13,6 +20,7 @@ export interface Artwork {
   description: string;
   imageUrl: string;
   museum?: string;
+  location: ArtworkLocation;
   period: ArtPeriod;
   whyItMatters: string;
 }
