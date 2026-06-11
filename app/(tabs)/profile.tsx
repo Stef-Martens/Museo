@@ -1,6 +1,7 @@
+import { useAuth } from "@/contexts/AuthContext";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import BadgePanel from "@/components/BadgePanel";
 import LevelBadge from "@/components/LevelBadge";
 import { colors, fonts } from "@/constants/theme";
@@ -8,6 +9,7 @@ import { getCollection } from "@/lib/storage";
 import type { UserCollection } from "@/types";
 
 export default function ProfileScreen() {
+  const { user, signOut } = useAuth();
   const [collection, setCollection] = useState<UserCollection | null>(null);
 
   useFocusEffect(
@@ -28,6 +30,9 @@ export default function ProfileScreen() {
           <Text style={styles.avatarText}>M</Text>
         </View>
         <Text style={styles.name}>Your profile</Text>
+        {user?.email && (
+          <Text style={styles.email}>{user.email}</Text>
+        )}
         <Text style={styles.stats}>
           {collection.artworks.length} discoveries · {collection.badges.length}{" "}
           badges
@@ -36,6 +41,10 @@ export default function ProfileScreen() {
 
       <LevelBadge level={collection.level} xp={collection.xp} />
       <BadgePanel earnedBadges={collection.badges} />
+
+      <Pressable style={styles.signOutBtn} onPress={signOut}>
+        <Text style={styles.signOutText}>Sign out</Text>
+      </Pressable>
     </ScrollView>
   );
 }
@@ -75,9 +84,27 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: colors.ink,
   },
+  email: {
+    fontSize: 13,
+    color: colors.stone,
+    marginTop: 4,
+  },
   stats: {
     fontSize: 14,
     color: colors.stone,
     marginTop: 4,
+  },
+  signOutBtn: {
+    borderWidth: 1,
+    borderColor: colors.mist,
+    borderRadius: 8,
+    paddingVertical: 14,
+    alignItems: "center",
+    marginTop: 8,
+  },
+  signOutText: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: colors.stone,
   },
 });

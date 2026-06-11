@@ -1,14 +1,16 @@
-import { ARTWORKS } from "@/lib/artworks";
+import { fetchArtworks } from "@/lib/artworks";
 import type { RecognitionResult } from "@/types";
 
 /**
- * MVP mock recognition — replace with real vision API or on-device ML later.
- * Shuffles confidence scores so captures feel responsive during testing.
+ * MVP mock recognition — matches against Supabase artwork catalog.
+ * Replace with a real vision API or edge function later.
  */
 export async function recognizeArtwork(
   _imageUri?: string
 ): Promise<RecognitionResult> {
-  const matches = ARTWORKS.map((artwork) => ({
+  const artworks = await fetchArtworks();
+
+  const matches = artworks.map((artwork) => ({
     artwork,
     confidence: Math.floor(Math.random() * 55) + 35,
   }));
