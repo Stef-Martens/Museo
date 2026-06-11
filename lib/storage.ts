@@ -1,5 +1,4 @@
-"use client";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { Artwork, Badge, UserCollection } from "@/types";
 import {
   XP_PER_ARTWORK,
@@ -18,10 +17,9 @@ const DEFAULT_COLLECTION: UserCollection = {
   scannedAt: {},
 };
 
-export function getCollection(): UserCollection {
-  if (typeof window === "undefined") return DEFAULT_COLLECTION;
+export async function getCollection(): Promise<UserCollection> {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = await AsyncStorage.getItem(STORAGE_KEY);
     if (!raw) return DEFAULT_COLLECTION;
     return { ...DEFAULT_COLLECTION, ...JSON.parse(raw) };
   } catch {
@@ -29,17 +27,17 @@ export function getCollection(): UserCollection {
   }
 }
 
-export function saveCollection(collection: UserCollection): void {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(collection));
+export async function saveCollection(collection: UserCollection): Promise<void> {
+  await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(collection));
 }
 
-export function isInCollection(artworkId: string): boolean {
-  return getCollection().artworks.some((a) => a.id === artworkId);
+export async function isInCollection(artworkId: string): Promise<boolean> {
+  const collection = await getCollection();
+  return collection.artworks.some((a) => a.id === artworkId);
 }
 
-export function addToCollection(artwork: Artwork): UserCollection {
-  const collection = getCollection();
+export async function addToCollection(artwork: Artwork): Promise<UserCollection> {
+  const collection = await getCollection();
   const alreadyOwned = collection.artworks.some((a) => a.id === artwork.id);
 
   if (alreadyOwned) return collection;
@@ -60,14 +58,11 @@ export function addToCollection(artwork: Artwork): UserCollection {
     },
   };
 
-  saveCollection(updated);
+  await saveCollection(updated);
   return updated;
 }
 
-export function getNewlyEarnedBadges(
-  before: Badge[],
-  after: Badge[]
-): Badge[] {
+export function getNewlyEarnedBadges(before: Badge[], after: Badge[]): Badge[] {
   const beforeIds = new Set(before.map((b) => b.id));
   return after.filter((b) => !beforeIds.has(b.id));
 }

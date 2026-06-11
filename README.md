@@ -1,51 +1,57 @@
 # Museo
 
-**Pokémon Go for Art** — a mobile-first web app that lets you scan artworks, identify them with AI, and build your personal art collection.
+**Pokémon Go for Art** — a native mobile app to scan artworks, identify them, and build your personal collection.
 
-## Features
+## Stack
 
-- **Camera scan** — point your phone at a painting and capture
-- **Artwork recognition** — mock recognition pipeline with confidence scores (swap in real API later)
-- **Artwork details** — title, artist, year, description, museum, and "why it matters"
-- **Collection** — save discoveries to local storage
-- **Gamification** — XP, art levels, and badges (First Scan, Renaissance Explorer, Modern Art Starter, etc.)
-- **AR feel** — scan frame overlay, glow animation, haptic feedback
+- **Expo** (React Native) — iOS & Android
+- **expo-router** — file-based navigation
+- **expo-camera** — artwork capture
+- **AsyncStorage** — local collection persistence
 
-## Tech Stack
+## Getting started
 
-- Next.js 15 (App Router)
-- React 19
-- TailwindCSS
-- localStorage for MVP persistence
-
-## Getting Started
+Uses **Expo SDK 54** — compatible with Expo Go on the App Store.
 
 ```bash
 npm install
-npm run dev
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) on your phone or in mobile dev tools.
+Then:
+- Press `i` for iOS Simulator
+- Press `a` for Android Emulator
+- Scan the QR code with **Expo Go** on your phone
 
-## How Recognition Works (MVP)
+## App Store (later)
 
-The mock recognition service compares color signatures of your captured image against a dataset of 8 famous artworks. For best results, point your camera at an artwork image on screen or in a book.
+When ready to ship:
 
-Future: swap `src/lib/recognition.ts` with Google Vision, OpenAI Vision, or a custom embeddings database.
-
-## Data Model
-
-```ts
-Artwork: { id, title, artist, year, description, imageUrl, museum?, period, whyItMatters }
-UserCollection: { userId, artworks[], xp, level, badges[], scannedAt }
+```bash
+npx eas-cli build --platform ios
+npx eas-cli submit --platform ios
 ```
 
-## Project Structure
+Requires an [Expo account](https://expo.dev) and Apple Developer membership ($99/year).
+
+## Project structure
 
 ```
-src/
-  app/           # Pages (scan, collection, profile, artwork detail)
-  components/    # UI components
-  lib/           # Artworks dataset, recognition, storage, gamification
-  types/         # TypeScript types
+app/           # Screens (expo-router)
+  (tabs)/      # Discover, Collection, Profile
+  artwork/     # Artwork detail
+  demo.tsx     # Test artworks
+components/    # Shared UI
+lib/           # Artworks, recognition, storage, gamification
+types/         # TypeScript types
+constants/     # Theme colors
 ```
+
+## Design
+
+Museum-modern editorial aesthetic. See `.cursor/skills/museum-modern-design/SKILL.md`.
+
+## MVP notes
+
+- Recognition is **mocked** — replace `lib/recognition.ts` with a real vision API later
+- You'll likely rewrite UI/UX once the shell is running — that's fine
