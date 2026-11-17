@@ -2,6 +2,15 @@
 
 **Pokémon Go for Art** — scan artworks, build your collection, and explore them on a world map.
 
+## Features
+
+- 📷 **Scan any artwork** with the camera. A Supabase Edge Function sends the photo to GPT-4o (vision) to identify it, so the OpenAI key never reaches the device.
+- 💬 **Ask about an artwork**: an in-app chat (second Edge Function) answers questions about the piece you scanned (GPT-4o mini)
+- 🗂️ **Collection** of every artwork you've discovered, with detail pages
+- 🗺️ **Discovery map** showing artworks on a world map (react-native-maps)
+- ⭐ **XP, levels and badges** to make collecting feel like a game
+- 🔐 **OAuth sign-in** (Google, Apple, GitHub) via Supabase Auth, with Row Level Security on all user data
+
 ## Stack
 
 - **Expo** (React Native) — iOS & Android
@@ -48,7 +57,7 @@ supabase secrets set OPENAI_API_KEY=sk-...
 supabase functions deploy recognize-artwork
 ```
 
-Scanning calls `recognize-artwork` (GPT-4o mini vision) to identify any artwork in view. Discovered works are saved to your collection automatically.
+Scanning calls `recognize-artwork` (GPT-4o vision) to identify any artwork in view. Discovered works are saved to your collection automatically.
 
 ### 4. OAuth providers
 
@@ -95,5 +104,5 @@ npx expo start
 
 ## Notes
 
-- Artwork recognition uses open AI vision (any artwork, not a fixed catalog)
+- Artwork recognition uses OpenAI vision, so it works for any artwork, not just a fixed catalogue
 - Apple Sign In requires extra setup in Apple Developer for production builds
